@@ -1,126 +1,98 @@
-# Contributor Covenant Code of Conduct
+# Manga Akojdad Code of Conduct
 
-## Our Pledge
+## عهدنا
 
-We as members, contributors, and leaders pledge to make participation in our
-community a harassment-free experience for everyone, regardless of age, body
-size, visible or invisible disability, ethnicity, sex characteristics, gender
-identity and expression, level of experience, education, socio-economic status,
-nationality, personal appearance, race, caste, color, religion, or sexual identity
-and orientation.
+نحن كأعضاء ومساهمين وقادة نتعهد بجعل المشاركة في مجتمعنا تجربة خالية من المضايقات للجميع، بغض النظر عن العمر أو حجم الجسم أو الإعاقة الظاهرة أو غير الظاهرة أو الأصل أو الجنس أو الهوية والتعبير الجندري أو مستوى الخبرة أو التعليم أو الوضع الاجتماعي-الاقتصادي أو الجنسية أو المظهر الشخصي أو العرق أو الدين أو أي توجه شخصي آخر.
 
-We pledge to act and interact in ways that contribute to an open, welcoming,
-diverse, inclusive, and healthy community.
+نتعهد بالتصرف والتفاعل بطرق تسهم في مجتمع مفتوح ومرحب ومتنوع وشامل وصحي.
 
-## Our Standards
+---
 
-Examples of behavior that contributes to a positive environment for our
-community include:
+## معاييرنا
 
-* Demonstrating empathy and kindness toward other people
-* Being respectful of differing opinions, viewpoints, and experiences
-* Giving and gracefully accepting constructive feedback
-* Accepting responsibility and apologizing to those affected by our mistakes,
-  and learning from the experience
-* Focusing on what is best not just for us as individuals, but for the
-  overall community
+### أمثلة على السلوك الذي يسهم في بيئة إيجابية لمجتمعنا:
+- إظهار التعاطف واللطف تجاه الآخرين.
+- احترام الآراء ووجهات النظر والخبرات المختلفة.
+- تقديم وقبول الملاحظات البناءة بروح طيبة.
+- تحمل المسؤولية والاعتذار عند ارتكاب أخطاء، والتعلم من التجربة.
+- التركيز على ما هو أفضل ليس فقط للأفراد ولكن للمجتمع ككل.
 
-Examples of unacceptable behavior include:
+### أمثلة على السلوك غير المقبول:
+- استخدام لغة أو صور ذات طابع جنسي، أو أي انتباه أو تقدم جنسي من أي نوع.
+- التعليقات المهينة أو الهجمات الشخصية أو السياسية.
+- المضايقات العلنية أو الخاصة.
+- نشر معلومات شخصية للآخرين دون إذن صريح منهم.
+- أي سلوك آخر يمكن اعتباره غير مناسب في بيئة مهنية.
 
-* The use of sexualized language or imagery, and sexual attention or
-  advances of any kind
-* Trolling, insulting or derogatory comments, and personal or political attacks
-* Public or private harassment
-* Publishing others' private information, such as a physical or email
-  address, without their explicit permission
-* Other conduct which could reasonably be considered inappropriate in a
-  professional setting
+---
 
-## Enforcement Responsibilities
+## المسؤوليات التنفيذية
 
-Community moderators are responsible for clarifying and enforcing our standards of
-acceptable behavior and will take appropriate and fair corrective action in
-response to any behavior that they deem inappropriate, threatening, offensive,
-or harmful.
+### مسؤوليات مشرفي المجتمع:
+- توضيح وتطبيق معايير السلوك المقبول.
+- اتخاذ إجراءات تصحيحية عادلة ومناسبة تجاه أي سلوك يعتبرونه غير مناسب أو مهددًا أو مسيئًا.
+- إزالة أو تحرير أو رفض التعليقات أو المشاركات التي لا تتماشى مع هذا العهد.
+- تقديم أسباب واضحة لقرارات الإشراف عند الاقتضاء.
 
-Community moderators have the right and responsibility to remove, edit, or reject
-comments, commits, code, wiki edits, issues, and other contributions that are
-not aligned to this Code of Conduct, and will communicate reasons for moderation
-decisions when appropriate.
+---
 
-## Scope
+## نطاق العهد
 
-This Code of Conduct applies within all community spaces, and also applies when
-an individual is officially representing the community in public spaces.
-Examples of representing our community include using an official e-mail address,
-posting via an official social media account, or acting as an appointed
-representative at an online or offline event.
+ينطبق هذا العهد على جميع المساحات المجتمعية لتطبيق **Manga Akojdad**، بما في ذلك:
+- قنوات التواصل الاجتماعي.
+- الأحداث عبر الإنترنت أو في الواقع.
+- أي تمثيل رسمي للمجتمع.
 
-## Enforcement
+---
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the community moderators responsible for enforcement at
-the [Mihon Discord server](https://discord.gg/mihon).
-All complaints will be reviewed and investigated promptly and fairly.
+## التنفيذ
 
-All community moderators are obligated to respect the privacy and security of the
-reporter of any incident.
+يمكن الإبلاغ عن حالات السلوك المسيء أو غير المقبول إلى المشرفين عبر:
+- [خادم Manga Akojdad على Discord](https://discord.gg/mangaakojdad).
 
-## Enforcement Guidelines
+سيتم مراجعة جميع الشكاوى والتحقيق فيها بسرعة وبإنصاف.  
+يتعهد جميع المشرفين باحترام خصوصية المبلغين وأمنهم.
 
-Community moderators will follow these Community Impact Guidelines in determining
-the consequences for any action they deem in violation of this Code of Conduct:
+---
 
-### 1. Correction
+## الإرشادات التنفيذية
 
-**Community Impact**: Use of inappropriate language or other behavior deemed
-unprofessional or unwelcome in the community.
+سيتم تطبيق هذه الإرشادات لتحديد عواقب أي تصرف ينتهك هذا العهد:
 
-**Consequence**: A private, written warning from community moderators, providing
-clarity around the nature of the violation and an explanation of why the
-behavior was inappropriate. A public apology may be requested.
+### 1. التصحيح
+**الأثر المجتمعي**: استخدام لغة غير لائقة أو سلوك غير مرحب به.
 
-### 2. Warning
+**العاقبة**: تحذير خاص مكتوب من المشرفين مع توضيح طبيعة الانتهاك وشرح سبب كونه غير مناسب. قد يُطلب اعتذار علني.
 
-**Community Impact**: A violation through a single incident or series
-of actions.
+---
 
-**Consequence**: A warning with consequences for continued behavior. No
-interaction with the people involved, including unsolicited interaction with
-those enforcing the Code of Conduct, for a specified period of time. This
-includes avoiding interactions in community spaces as well as external channels
-like social media. Violating these terms may lead to a temporary or
-permanent ban.
+### 2. التحذير
+**الأثر المجتمعي**: انتهاك من خلال حادثة واحدة أو سلسلة من الأفعال.
 
-### 3. Temporary Ban
+**العاقبة**: تحذير مع عواقب محددة لاستمرار السلوك، مثل تجنب التفاعل مع الأطراف المتورطة لفترة زمنية محددة. قد يؤدي انتهاك هذه الشروط إلى حظر مؤقت أو دائم.
 
-**Community Impact**: A serious violation of community standards, including
-sustained inappropriate behavior.
+---
 
-**Consequence**: A temporary ban from any sort of interaction or public
-communication with the community for a specified period of time. No public or
-private interaction with the people involved, including unsolicited interaction
-with those enforcing the Code of Conduct, is allowed during this period.
-Violating these terms may lead to a permanent ban.
+### 3. الحظر المؤقت
+**الأثر المجتمعي**: انتهاك خطير لمعايير المجتمع.
 
-### 4. Permanent Ban
+**العاقبة**: حظر مؤقت من التفاعل مع المجتمع. يؤدي انتهاك الشروط خلال هذه الفترة إلى حظر دائم.
 
-**Community Impact**: Demonstrating a pattern of violation of community
-standards, including sustained inappropriate behavior,  harassment of an
-individual, or aggression toward or disparagement of classes of individuals.
+---
 
-**Consequence**: A permanent ban from any sort of public interaction within
-the community.
+### 4. الحظر الدائم
+**الأثر المجتمعي**: نمط من الانتهاكات المستمرة لمعايير المجتمع أو سلوك عدائي مستمر.
 
-## Attribution
+**العاقبة**: حظر دائم من أي نوع من التفاعل مع المجتمع.
 
-This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org/),
-version 2.1, available at
-[v2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct.html).
+---
 
-Community Impact Guidelines were inspired by
-[Mozilla's code of conduct enforcement ladder](https://github.com/mozilla/diversity).
+## الإسناد
 
-For answers to common questions about this code of conduct, see the FAQ at
-[FAQ](https://www.contributor-covenant.org/faq). Translations are available
-at [translations](https://www.contributor-covenant.org/translations).
+تم استلهام هذا العهد من [Contributor Covenant](https://www.contributor-covenant.org/)، الإصدار 2.1.  
+
+---
+
+### ملاحظات إضافية
+- إذا كان لديك أي اقتراحات لتطوير هذا العهد أو تحسينه ليتماشى مع رؤية تطبيق **Manga Akojdad**، نرجو منك التواصل معنا.
+- نحن ملتزمون بجعل بيئتنا آمنة ومرحبة للجميع.
