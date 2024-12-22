@@ -1,2 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- أذونات الوصول إلى الإنترنت (مهمة إذا كان المشروع يتطلب الوصول إلى الشبكة) -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    
+    <!-- أذن الوصول إلى التخزين (إذا كنت بحاجة للوصول إلى ملفات أو مجلدات في الجهاز) -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    
+    <!-- أذن الوصول إلى الشبكة المحلية (إذا كنت بحاجة للوصول إلى الأجهزة في الشبكة المحلية) -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    
+    <!-- أذن الوصول إلى حالة الاتصال بالشبكة (للتحقق من حالة الاتصال) -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- أذن استخدام كاميرا (إذا كان المشروع يستخدم الكاميرا) -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- أذن استخدام الميكروفون (إذا كان المشروع يحتاج إلى الميكروفون) -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    
+    <!-- يمكنك إضافة المزيد من الأذونات هنا حسب حاجة المشروع -->
+</manifest>
