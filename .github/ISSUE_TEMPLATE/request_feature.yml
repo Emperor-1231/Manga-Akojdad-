@@ -1,26 +1,23 @@
 name: ⭐ Feature request
-description: Suggest a feature to improve Mihon
+description: Suggest a feature to improve Manga Akojdad
 labels: [Feature request]
 body:
-
   - type: textarea
     id: feature-description
     attributes:
       label: Describe your suggested feature
-      description: How can Mihon be improved?
+      description: How can Manga Akojdad be improved?
       placeholder: |
         Example:
           "It should work like this..."
     validations:
       required: true
-
   - type: textarea
     id: other-details
     attributes:
       label: Other details
       placeholder: |
         Additional details and attachments.
-
   - type: checkboxes
     id: acknowledgements
     attributes:
@@ -31,7 +28,7 @@ body:
           required: true
         - label: I have written a short but informative title.
           required: true
-        - label: I have updated the app to version **[0.17.1](https://github.com/mihonapp/mihon/releases/latest)**.
+        - label: I have updated the app to the latest version of Manga Akojdad.
           required: true
         - label: I will fill out all of the requested information in this form.
           required: true
