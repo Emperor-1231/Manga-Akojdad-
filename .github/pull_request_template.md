@@ -1,12 +1,12 @@
 <!--
-  Please include a summary of the change and which issue is fixed.
-  Also make sure you've tested your code and also done a self-review of it.
-  Don't forget to check all base themes and tablet mode for relevant changes.
-  
-  If your changes are visual, please provide images below:
+  الرجاء تضمين ملخص للتغيير وتوضيح المشكلة التي تم حلها.
+  تأكد من أنك اختبرت الكود وقمت بمراجعة ذاتية له.
+  لا تنسَ التحقق من جميع القوالب الأساسية (Base Themes) ووضع الأجهزة اللوحية لأي تغييرات ذات صلة.
 
-### Images
-| Image 1 | Image 2 |
-| ------- | ------- |
+  إذا كانت تغييراتك مرئية (Visual)، يرجى تقديم الصور أدناه:
+
+### الصور
+| الصورة 1 | الصورة 2 |
+| -------- | -------- |
 | ![](https://github.githubassets.com/images/modules/logos_page/Octocat.png) | ![](https://github.githubassets.com/images/modules/logos_page/Octocat.png) |
 -->
