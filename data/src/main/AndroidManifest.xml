@@ -1,2 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.mangaakojdad">
+
+    <!-- تعريف الأنشطة (Activities) التي يحتوي عليها التطبيق -->
+    <application
+        android:name=".MainApplication"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+
+        <!-- النشاط الرئيسي (Main Activity) للتطبيق -->
+        <activity android:name=".MainActivity"
+            android:label="@string/Manga Akojdad"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- تعريف الأنشطة الأخرى التي قد يحتوي عليها التطبيق -->
+
+    </application>
+
+</manifest>
