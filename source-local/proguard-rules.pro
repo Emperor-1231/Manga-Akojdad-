@@ -1,21 +1,24 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
+# أضف قواعد ProGuard الخاصة بتطبيقك هنا.
+# يمكنك التحكم في مجموعة ملفات التكوين المطبقة باستخدام
+# proguardFiles في build.gradle.
 #
-# For more details, see
+# لمزيد من التفاصيل، انظر
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
+# حافظ على أسماء الفئات التي تخص SQDelight
+-keep class com.mangaakojdad.source.local.** { *; }
+
+# إذا كنت تستخدم الـ WebView مع JavaScript، أضف قواعد للمحافظة عليها
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
+#    public *;
 #}
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# إذا كان تطبيقك يعتمد على الواجهات الخاصة بـ Kotlin Serialization
+# قم بالحفاظ عليها:
+-keep class kotlinx.serialization.** { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# حافظ على تفاصيل الفئات الخاصة بـ SQDelight
+-keep class com.squareup.sqldelight.** { *; }
+
+# حافظ على الأسطر في حال تم استخدام Debugging أو تتبع الأخطاء
+-keepattributes SourceFile,LineNumberTable
