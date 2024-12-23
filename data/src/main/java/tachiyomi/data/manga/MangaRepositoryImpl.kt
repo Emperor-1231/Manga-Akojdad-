@@ -141,38 +141,3 @@ class MangaRepositoryImpl(
             true
         } catch (e: Exception) {
             logcat(LogPriority.ERROR, e)
-            false
-        }
-    }
-
-    private suspend fun partialUpdate(vararg mangaUpdates: MangaUpdate) {
-        handler.await(inTransaction = true) {
-            mangaUpdates.forEach { value ->
-                mangasQueries.update(
-                    source = value.source,
-                    url = value.url,
-                    artist = value.artist,
-                    author = value.author,
-                    description = value.description,
-                    genre = value.genre?.let(StringListColumnAdapter::encode),
-                    title = value.title,
-                    status = value.status,
-                    thumbnailUrl = value.thumbnailUrl,
-                    favorite = value.favorite,
-                    lastUpdate = value.lastUpdate,
-                    nextUpdate = value.nextUpdate,
-                    calculateInterval = value.fetchInterval?.toLong(),
-                    initialized = value.initialized,
-                    viewer = value.viewerFlags,
-                    chapterFlags = value.chapterFlags,
-                    coverLastModified = value.coverLastModified,
-                    dateAdded = value.dateAdded,
-                    mangaId = value.id,
-                    updateStrategy = value.updateStrategy?.let(UpdateStrategyColumnAdapter::encode),
-                    version = value.version,
-                    isSyncing = 0,
-                )
-            }
-        }
-    }
-}
