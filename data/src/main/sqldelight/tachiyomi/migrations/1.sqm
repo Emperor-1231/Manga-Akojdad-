@@ -1,4 +1,4 @@
--- MangaUpdates score fixing --
+-- تصحيح درجات MangaUpdates --
 UPDATE manga_sync
-SET score = max(score, 0)
+SET score = max(score, 0)  -- تحديث الدرجة لتكون أكبر من أو تساوي 0
 WHERE sync_id = 7;
