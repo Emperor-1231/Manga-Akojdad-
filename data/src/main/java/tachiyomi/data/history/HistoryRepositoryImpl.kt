@@ -1,13 +1,13 @@
-package tachiyomi.data.history
+package manga.akodjad.data.history
 
 import kotlinx.coroutines.flow.Flow
 import logcat.LogPriority
-import tachiyomi.core.common.util.system.logcat
-import tachiyomi.data.DatabaseHandler
-import tachiyomi.domain.history.model.History
-import tachiyomi.domain.history.model.HistoryUpdate
-import tachiyomi.domain.history.model.HistoryWithRelations
-import tachiyomi.domain.history.repository.HistoryRepository
+import manga.akodjad.core.common.util.system.logcat
+import manga.akodjad.data.DatabaseHandler
+import manga.akodjad.domain.history.model.History
+import manga.akodjad.domain.history.model.HistoryUpdate
+import manga.akodjad.domain.history.model.HistoryWithRelations
+import manga.akodjad.domain.history.repository.HistoryRepository
 
 class HistoryRepositoryImpl(
     private val handler: DatabaseHandler,
