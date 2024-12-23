@@ -74,17 +74,17 @@ class SourceRepositoryImpl(
         filterList: FilterList,
     ): SourcePagingSourceType {
         val source = sourceManager.get(sourceId) as CatalogueSource
-        return SourceSearchPagingSource(source, query, filterList)
+        return MangaAkojdadSearchPagingSource(source, query, filterList)
     }
 
     override fun getPopular(sourceId: Long): SourcePagingSourceType {
         val source = sourceManager.get(sourceId) as CatalogueSource
-        return SourcePopularPagingSource(source)
+        return MangaAkojdadPopularPagingSource(source)
     }
 
     override fun getLatest(sourceId: Long): SourcePagingSourceType {
         val source = sourceManager.get(sourceId) as CatalogueSource
-        return SourceLatestPagingSource(source)
+        return MangaAkojdadLatestPagingSource(source)
     }
 
     private fun mapSourceToDomainSource(source: Source): DomainSource = DomainSource(
