@@ -1,6 +1,6 @@
 import kotlin.Boolean;
 
-CREATE TABLE chapters(
+CREATE TABLE chapters (
     _id INTEGER NOT NULL PRIMARY KEY,
     manga_id INTEGER NOT NULL,
     url TEXT NOT NULL,
@@ -16,38 +16,38 @@ CREATE TABLE chapters(
     last_modified_at INTEGER NOT NULL DEFAULT 0,
     version INTEGER NOT NULL DEFAULT 0,
     is_syncing INTEGER NOT NULL DEFAULT 0,
-    FOREIGN KEY(manga_id) REFERENCES mangas (_id)
-    ON DELETE CASCADE
+    FOREIGN KEY(manga_id) REFERENCES mangas (_id) ON DELETE CASCADE
 );
 
+-- Create indexes for chapters table
 CREATE INDEX chapters_manga_id_index ON chapters(manga_id);
 CREATE INDEX chapters_unread_by_manga_index ON chapters(manga_id, read) WHERE read = 0;
 
+-- Trigger for updating the last modified time
 CREATE TRIGGER update_last_modified_at_chapters
 AFTER UPDATE ON chapters
 FOR EACH ROW
 BEGIN
-  UPDATE chapters
-  SET last_modified_at = strftime('%s', 'now')
-  WHERE _id = new._id;
+    UPDATE chapters
+    SET last_modified_at = strftime('%s', 'now')
+    WHERE _id = new._id;
 END;
 
-CREATE TRIGGER update_chapter_and_manga_version AFTER UPDATE ON chapters
+-- Trigger to update versions after chapter updates
+CREATE TRIGGER update_chapter_and_manga_version
+AFTER UPDATE ON chapters
 WHEN new.is_syncing = 0 AND (
     new.read != old.read OR
     new.bookmark != old.bookmark OR
     new.last_page_read != old.last_page_read
 )
 BEGIN
-    -- Update the chapter version
-    UPDATE chapters SET version = version + 1
-    WHERE _id = new._id;
-
-    -- Update the manga version
+    UPDATE chapters SET version = version + 1 WHERE _id = new._id;
     UPDATE mangas SET version = version + 1
     WHERE _id = new.manga_id AND (SELECT is_syncing FROM mangas WHERE _id = new.manga_id) = 0;
 END;
 
+-- Queries for chapters
 getChapterById:
 SELECT *
 FROM chapters
@@ -56,14 +56,10 @@ WHERE _id = :id;
 getChaptersByMangaId:
 SELECT C.*
 FROM chapters C
-LEFT JOIN excluded_scanlators ES
-ON C.manga_id = ES.manga_id
+LEFT JOIN excluded_scanlators ES ON C.manga_id = ES.manga_id
 AND C.scanlator = ES.scanlator
 WHERE C.manga_id = :mangaId
-AND (
-    :applyScanlatorFilter = 0
-    OR ES.scanlator IS NULL
-);
+AND (:applyScanlatorFilter = 0 OR ES.scanlator IS NULL);
 
 getScanlatorsByMangaId:
 SELECT scanlator
@@ -96,26 +92,29 @@ UPDATE chapters
 SET is_syncing = 0
 WHERE is_syncing = 1;
 
+-- Insert chapter
 insert:
 INSERT INTO chapters(manga_id, url, name, scanlator, read, bookmark, last_page_read, chapter_number, source_order, date_fetch, date_upload, last_modified_at, version, is_syncing)
 VALUES (:mangaId, :url, :name, :scanlator, :read, :bookmark, :lastPageRead, :chapterNumber, :sourceOrder, :dateFetch, :dateUpload, 0, :version, 0);
 
+-- Update chapter
 update:
 UPDATE chapters
-SET manga_id = coalesce(:mangaId, manga_id),
-    url = coalesce(:url, url),
-    name = coalesce(:name, name),
-    scanlator = coalesce(:scanlator, scanlator),
-    read = coalesce(:read, read),
-    bookmark = coalesce(:bookmark, bookmark),
-    last_page_read = coalesce(:lastPageRead, last_page_read),
-    chapter_number = coalesce(:chapterNumber, chapter_number),
-    source_order = coalesce(:sourceOrder, source_order),
-    date_fetch = coalesce(:dateFetch, date_fetch),
-    date_upload = coalesce(:dateUpload, date_upload),
-    version = coalesce(:version, version),
-    is_syncing = coalesce(:isSyncing, is_syncing)
+SET manga_id = COALESCE(:mangaId, manga_id),
+    url = COALESCE(:url, url),
+    name = COALESCE(:name, name),
+    scanlator = COALESCE(:scanlator, scanlator),
+    read = COALESCE(:read, read),
+    bookmark = COALESCE(:bookmark, bookmark),
+    last_page_read = COALESCE(:lastPageRead, last_page_read),
+    chapter_number = COALESCE(:chapterNumber, chapter_number),
+    source_order = COALESCE(:sourceOrder, source_order),
+    date_fetch = COALESCE(:dateFetch, date_fetch),
+    date_upload = COALESCE(:dateUpload, date_upload),
+    version = COALESCE(:version, version),
+    is_syncing = COALESCE(:isSyncing, is_syncing)
 WHERE _id = :chapterId;
 
+-- Get last inserted row ID
 selectLastInsertedRowId:
 SELECT last_insert_rowid();
