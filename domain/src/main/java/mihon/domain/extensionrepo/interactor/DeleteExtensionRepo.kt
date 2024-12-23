@@ -1,24 +1,18 @@
 package akojdad.domain.extensionrepo.interactor
 
-import kotlinx.coroutines.flow.Flow
-import akojdad.domain.extensionrepo.model.ExtensionRepo
 import akojdad.domain.extensionrepo.repository.ExtensionRepoRepository
 
 /**
- * مسؤول عن استرجاع المستودعات المخزنة.
+ * مسؤول عن حذف مستودع إضافة من قاعدة البيانات.
  */
-class GetExtensionRepo(
+class DeleteExtensionRepo(
     private val repository: ExtensionRepoRepository,
 ) {
     /**
-     * الاشتراك في جميع مستودعات الإضافات كمصدر بيانات متدفق.
-     * @return قائمة محدثة من المستودعات.
+     * حذف مستودع بناءً على عنوانه الأساسي.
+     * @param baseUrl الرابط الأساسي للمستودع.
      */
-    fun subscribeAll(): Flow<List<ExtensionRepo>> = repository.subscribeAll()
-
-    /**
-     * استرجاع جميع مستودعات الإضافات دفعة واحدة.
-     * @return قائمة بجميع المستودعات.
-     */
-    suspend fun getAll(): List<ExtensionRepo> = repository.getAll()
+    suspend fun await(baseUrl: String) {
+        repository.deleteRepo(baseUrl)
+    }
 }
