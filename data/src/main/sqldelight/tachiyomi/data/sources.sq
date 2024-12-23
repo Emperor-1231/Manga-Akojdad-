@@ -1,18 +1,21 @@
 CREATE TABLE sources(
-    _id INTEGER NOT NULL PRIMARY KEY,
-    lang TEXT NOT NULL,
-    name TEXT NOT NULL
+    _id INTEGER NOT NULL PRIMARY KEY, -- معرّف المصدر
+    lang TEXT NOT NULL, -- اللغة الخاصة بالمصدر
+    name TEXT NOT NULL -- اسم المصدر
 );
 
+-- استعلام لجلب جميع المصادر
 findAll:
 SELECT *
 FROM sources;
 
+-- استعلام لجلب مصدر حسب معرّفه
 findOne:
 SELECT *
 FROM sources
 WHERE _id = :id;
 
+-- استعلام لإدخال أو تحديث مصدر
 upsert:
 INSERT INTO sources(_id, lang, name)
 VALUES (:id, :lang, :name)
