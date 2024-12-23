@@ -1,31 +1,31 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
-    id("mihon.library")
-    kotlin("multiplatform")
+    id("mihon.library") // استخدام مكتبة Mihon الخاصة
+    kotlin("multiplatform") // دعم Kotlin متعدد المنصات
 }
 
 kotlin {
-    androidTarget()
+    androidTarget() // دعم الاستهداف لـ Android
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.sourceApi)
-                api(projects.i18n)
+                implementation(projects.sourceApi) // إضافة مكتبة الـ API المصدر
+                api(projects.i18n) // إضافة مكتبة الترجمة الدولية
 
-                implementation(libs.unifile)
+                implementation(libs.unifile) // إضافة مكتبة Unifile للتعامل مع الملفات
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation(projects.core.archive)
-                implementation(projects.core.common)
-                implementation(projects.coreMetadata)
+                implementation(projects.core.archive) // إضافة مكتبة الـ Archive
+                implementation(projects.core.common) // إضافة المكتبة المشتركة
+                implementation(projects.coreMetadata) // إضافة مكتبة الـ Metadata
 
-                // Move ChapterRecognition to separate module?
-                implementation(projects.domain)
+                // يمكن نقل مكتبة ChapterRecognition إلى وحدة منفصلة في المستقبل؟
+                implementation(projects.domain) // إضافة مكتبة الـ Domain
 
-                implementation(kotlinx.bundles.serialization)
+                implementation(kotlinx.bundles.serialization) // إضافة مكتبة Serialization من Kotlin
             }
         }
     }
@@ -33,17 +33,17 @@ kotlin {
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     compilerOptions {
         freeCompilerArgs.addAll(
-            "-Xexpect-actual-classes",
-            "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
+            "-Xexpect-actual-classes", // تمكين الفئات "expect/actual"
+            "-opt-in=kotlinx.serialization.ExperimentalSerializationApi", // تمكين API التجربة لـ Kotlin Serialization
         )
     }
 }
 
 android {
-    namespace = "tachiyomi.source.local"
+    namespace = "com.mangaakojdad.source.local" // تغيير الـ namespace ليتناسب مع تطبيق Manga Akojdad
 
     defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner" // إعداد Runner لاختبارات Android
+        consumerProguardFiles("consumer-rules.pro") // استخدام ملف proguard الخاص بالتطبيق
     }
 }
