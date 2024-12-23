@@ -1,8 +1,8 @@
-package tachiyomi.data.history
+package manga.akodjad.data.history
 
-import tachiyomi.domain.history.model.History
-import tachiyomi.domain.history.model.HistoryWithRelations
-import tachiyomi.domain.manga.model.MangaCover
+import manga.akodjad.domain.history.model.History
+import manga.akodjad.domain.history.model.HistoryWithRelations
+import manga.akodjad.domain.manga.model.MangaCover
 import java.util.Date
 
 object HistoryMapper {
