@@ -1,21 +1,25 @@
-CREATE TABLE categories(
+CREATE TABLE categories (
     _id INTEGER NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
     sort INTEGER NOT NULL,
     flags INTEGER NOT NULL
 );
 
--- Insert system category
-INSERT OR IGNORE INTO categories(_id, name, sort, flags) VALUES (0, "", -1, 0);
--- Disallow deletion of default category
-CREATE TRIGGER IF NOT EXISTS system_category_delete_trigger BEFORE DELETE
-ON categories
-BEGIN SELECT CASE
-    WHEN old._id <= 0 THEN
-        RAISE(ABORT, "System category can't be deleted")
+-- Insert system category if not exists
+INSERT OR IGNORE INTO categories (_id, name, sort, flags) 
+VALUES (0, "", -1, 0);
+
+-- Prevent deletion of default system category
+CREATE TRIGGER IF NOT EXISTS system_category_delete_trigger 
+BEFORE DELETE ON categories
+BEGIN 
+    SELECT CASE
+        WHEN old._id <= 0 THEN
+            RAISE(ABORT, "System category can't be deleted")
     END;
 END;
 
+-- Queries for fetching categories
 getCategory:
 SELECT *
 FROM categories
@@ -24,42 +28,46 @@ LIMIT 1;
 
 getCategories:
 SELECT
-_id AS id,
-name,
-sort AS `order`,
-flags
+    _id AS id,
+    name,
+    sort AS `order`,
+    flags
 FROM categories
 ORDER BY sort;
 
 getCategoriesByMangaId:
 SELECT
-C._id AS id,
-C.name,
-C.sort AS `order`,
-C.flags
+    C._id AS id,
+    C.name,
+    C.sort AS `order`,
+    C.flags
 FROM categories C
 JOIN mangas_categories MC
 ON C._id = MC.category_id
 WHERE MC.manga_id = :mangaId;
 
+-- Insert a new category
 insert:
 INSERT INTO categories(name, sort, flags)
 VALUES (:name, :order, :flags);
 
+-- Delete a category
 delete:
 DELETE FROM categories
 WHERE _id = :categoryId;
 
+-- Update category details
 update:
 UPDATE categories
-SET name = coalesce(:name, name),
-    sort = coalesce(:order, sort),
-    flags = coalesce(:flags, flags)
+SET name = COALESCE(:name, name),
+    sort = COALESCE(:order, sort),
+    flags = COALESCE(:flags, flags)
 WHERE _id = :categoryId;
 
+-- Update all categories' flags
 updateAllFlags:
-UPDATE categories SET
-flags = coalesce(?, flags);
+UPDATE categories SET flags = COALESCE(?, flags);
 
+-- Get last inserted row ID
 selectLastInsertedRowId:
 SELECT last_insert_rowid();
