@@ -1,4 +1,4 @@
-package com.mangaakojdad.source.local.io
+pakage com.mangaakojdad.source.local.io
 
 import com.hippo.unifile.UniFile
 
