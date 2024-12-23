@@ -1,37 +1,38 @@
+-- إنشاء View لعرض بيانات المانغا المفضلة مع الإحصائيات المرتبطة
 CREATE VIEW libraryView AS
 SELECT
-    M.*,
-    coalesce(C.total, 0) AS totalCount,
-    coalesce(C.readCount, 0) AS readCount,
-    coalesce(C.latestUpload, 0) AS latestUpload,
-    coalesce(C.fetchedAt, 0) AS chapterFetchedAt,
-    coalesce(C.lastRead, 0) AS lastRead,
-    coalesce(C.bookmarkCount, 0) AS bookmarkCount,
-    coalesce(MC.category_id, 0) AS category
+    M.*,  -- جميع الأعمدة من جدول المانغا
+    coalesce(C.total, 0) AS totalCount,  -- إجمالي الفصول
+    coalesce(C.readCount, 0) AS readCount,  -- عدد الفصول المقروءة
+    coalesce(C.latestUpload, 0) AS latestUpload,  -- تاريخ آخر تحميل للفصل
+    coalesce(C.fetchedAt, 0) AS chapterFetchedAt,  -- تاريخ جلب الفصل
+    coalesce(C.lastRead, 0) AS lastRead,  -- تاريخ آخر قراءة
+    coalesce(C.bookmarkCount, 0) AS bookmarkCount,  -- عدد الفصول المفضلة
+    coalesce(MC.category_id, 0) AS category  -- فئة المانغا
 FROM mangas M
-LEFT JOIN(
+LEFT JOIN (
     SELECT
-        chapters.manga_id,
-        count(*) AS total,
-        sum(read) AS readCount,
-        coalesce(max(chapters.date_upload), 0) AS latestUpload,
-        coalesce(max(history.last_read), 0) AS lastRead,
-        coalesce(max(chapters.date_fetch), 0) AS fetchedAt,
-        sum(chapters.bookmark) AS bookmarkCount
+        chapters.manga_id,  -- معرف المانغا
+        count(*) AS total,  -- إجمالي عدد الفصول
+        sum(read) AS readCount,  -- عدد الفصول المقروءة
+        coalesce(max(chapters.date_upload), 0) AS latestUpload,  -- تاريخ آخر تحميل للفصل
+        coalesce(max(history.last_read), 0) AS lastRead,  -- تاريخ آخر قراءة
+        coalesce(max(chapters.date_fetch), 0) AS fetchedAt,  -- تاريخ آخر جلب للفصل
+        sum(chapters.bookmark) AS bookmarkCount  -- عدد الفصول المفضلة
     FROM chapters
-    LEFT JOIN excluded_scanlators
+    LEFT JOIN excluded_scanlators  -- دمج الفصول مع جدول الاستبعادات
     ON chapters.manga_id = excluded_scanlators.manga_id
     AND chapters.scanlator = excluded_scanlators.scanlator
-    LEFT JOIN history
+    LEFT JOIN history  -- دمج الفصول مع جدول التاريخ
     ON chapters._id = history.chapter_id
     WHERE excluded_scanlators.scanlator IS NULL
-    GROUP BY chapters.manga_id
+    GROUP BY chapters.manga_id  -- تجميع الفصول حسب المانغا
 ) AS C
 ON M._id = C.manga_id
-LEFT JOIN mangas_categories AS MC
+LEFT JOIN mangas_categories AS MC  -- دمج الفصول مع الفئات
 ON MC.manga_id = M._id
-WHERE M.favorite = 1;
+WHERE M.favorite = 1;  -- فقط المانغا المفضلة
 
-library:
+-- استعلام للحصول على جميع المانغا المفضلة
 SELECT *
 FROM libraryView;
