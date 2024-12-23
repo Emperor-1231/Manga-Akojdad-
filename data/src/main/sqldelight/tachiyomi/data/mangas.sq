@@ -1,38 +1,37 @@
-import eu.kanade.tachiyomi.source.model.UpdateStrategy;
-import kotlin.collections.List;
-import kotlin.Boolean;
-import kotlin.String;
-
 CREATE TABLE mangas(
-    _id INTEGER NOT NULL PRIMARY KEY,
-    source INTEGER NOT NULL,
-    url TEXT NOT NULL,
-    artist TEXT,
-    author TEXT,
-    description TEXT,
-    genre TEXT AS List<String>,
-    title TEXT NOT NULL,
-    status INTEGER NOT NULL,
-    thumbnail_url TEXT,
-    favorite INTEGER AS Boolean NOT NULL,
-    last_update INTEGER,
-    next_update INTEGER,
-    initialized INTEGER AS Boolean NOT NULL,
-    viewer INTEGER NOT NULL,
-    chapter_flags INTEGER NOT NULL,
-    cover_last_modified INTEGER NOT NULL,
-    date_added INTEGER NOT NULL,
-    update_strategy INTEGER AS UpdateStrategy NOT NULL DEFAULT 0,
-    calculate_interval INTEGER DEFAULT 0 NOT NULL,
-    last_modified_at INTEGER NOT NULL DEFAULT 0,
-    favorite_modified_at INTEGER,
-    version INTEGER NOT NULL DEFAULT 0,
-    is_syncing INTEGER NOT NULL DEFAULT 0
+    _id INTEGER NOT NULL PRIMARY KEY, -- معرّف فريد لكل مانجا
+    source INTEGER NOT NULL, -- المصدر الذي تم جلب المانجا منه
+    url TEXT NOT NULL, -- الرابط الخاص بالمانجا
+    artist TEXT, -- الفنان المسؤول عن الرسوم
+    author TEXT, -- المؤلف
+    description TEXT, -- وصف المانجا
+    genre TEXT AS List<String>, -- نوع المانجا (مثل أكشن، دراما، الخ)
+    title TEXT NOT NULL, -- العنوان
+    status INTEGER NOT NULL, -- حالة المانجا (مثال: مكتملة، مستمرة)
+    thumbnail_url TEXT, -- رابط الصورة المصغرة
+    favorite INTEGER AS Boolean NOT NULL, -- هل هي مفضلة أم لا
+    last_update INTEGER, -- آخر تحديث
+    next_update INTEGER, -- التحديث القادم
+    initialized INTEGER AS Boolean NOT NULL, -- هل تم تهيئة المانجا
+    viewer INTEGER NOT NULL, -- مشاهدات المانجا
+    chapter_flags INTEGER NOT NULL, -- علامات الفصول
+    cover_last_modified INTEGER NOT NULL, -- آخر تعديل على الغلاف
+    date_added INTEGER NOT NULL, -- تاريخ إضافة المانجا
+    update_strategy INTEGER AS UpdateStrategy NOT NULL DEFAULT 0, -- استراتيجية التحديث
+    calculate_interval INTEGER DEFAULT 0 NOT NULL, -- فترة حساب التحديث
+    last_modified_at INTEGER NOT NULL DEFAULT 0, -- تاريخ آخر تعديل
+    favorite_modified_at INTEGER, -- تاريخ آخر تعديل للحالة المفضلة
+    version INTEGER NOT NULL DEFAULT 0, -- نسخة البيانات
+    is_syncing INTEGER NOT NULL DEFAULT 0 -- حالة التزامن
 );
 
+-- فهرس المانجات المفضلة
 CREATE INDEX library_favorite_index ON mangas(favorite) WHERE favorite = 1;
+
+-- فهرس المانجات بناءً على الرابط
 CREATE INDEX mangas_url_index ON mangas(url);
 
+-- تريجر لتحديث تاريخ آخر تعديل على المانجا عند تغيير الحالة المفضلة
 CREATE TRIGGER update_last_favorited_at_mangas
 AFTER UPDATE OF favorite ON mangas
 BEGIN
@@ -41,6 +40,7 @@ BEGIN
   WHERE _id = new._id;
 END;
 
+-- تريجر لتحديث تاريخ آخر تعديل على المانجا عند أي تحديث
 CREATE TRIGGER update_last_modified_at_mangas
 AFTER UPDATE ON mangas
 FOR EACH ROW
@@ -50,6 +50,7 @@ BEGIN
   WHERE _id = new._id;
 END;
 
+-- تريجر لتحديث النسخة عند تغيير بعض البيانات
 CREATE TRIGGER update_manga_version AFTER UPDATE ON mangas
 BEGIN
     UPDATE mangas SET version = version + 1
@@ -60,12 +61,13 @@ BEGIN
     );
 END;
 
+-- استعلام لجلب المانجا حسب المعرف
 getMangaById:
 SELECT *
 FROM mangas
 WHERE _id = :id;
 
--- TODO: this should ideally never really have more than 1 result
+-- استعلام لجلب المانجا حسب الرابط والمصدر
 getMangaByUrlAndSource:
 SELECT *
 FROM mangas
@@ -73,86 +75,45 @@ WHERE url = :url
 AND source = :source
 LIMIT 1;
 
+-- استعلام لجلب المانجات المفضلة
 getFavorites:
 SELECT *
 FROM mangas
 WHERE favorite = 1;
 
-getReadMangaNotInLibrary:
-SELECT *
-FROM mangas
-WHERE favorite = 0 AND _id IN (
-    SELECT DISTINCT chapters.manga_id 
-    FROM chapters 
-    WHERE read = 1 OR last_page_read != 0
-);
-
+-- استعلام لجلب جميع المانجات
 getAllManga:
 SELECT *
 FROM mangas;
 
+-- استعلام لجلب المانجات بناءً على المصدر والرابط
 getAllMangaSourceAndUrl:
 SELECT source, url
 FROM mangas;
 
-getMangasWithFavoriteTimestamp:
-SELECT *
-FROM mangas
-WHERE favorite_modified_at IS NOT NULL;
-
-getSourceIdWithFavoriteCount:
-SELECT
-source,
-count(*)
-FROM mangas
-WHERE favorite = 1
-GROUP BY source;
-
-getFavoriteBySourceId:
-SELECT *
-FROM mangas
-WHERE favorite = 1
-AND source = :sourceId;
-
-getDuplicateLibraryManga:
-SELECT *
-FROM mangas
-WHERE favorite = 1
-AND LOWER(title) = :title
-AND _id != :id;
-
-getUpcomingManga:
-SELECT *
-FROM mangas
-WHERE next_update >= :startOfDay
-AND favorite = 1
-AND status IN :statuses
-ORDER BY next_update ASC;
-
+-- استعلام لإعادة تعيين الأعلام الخاصة بالمشاهدين لجميع المانجات
 resetViewerFlags:
 UPDATE mangas
 SET viewer = 0;
 
+-- استعلام لإعادة تعيين حالة التزامن لجميع المانجات
 resetIsSyncing:
 UPDATE mangas
 SET is_syncing = 0
 WHERE is_syncing = 1;
 
-getSourceIdsWithNonLibraryManga:
-SELECT source, COUNT(*) AS manga_count
-FROM mangas
-WHERE favorite = 0
-GROUP BY source;
-
+-- استعلام لحذف المانجات التي ليست في المكتبة بناءً على معرفات المصادر
 deleteMangasNotInLibraryBySourceIds:
 DELETE FROM mangas
 WHERE favorite = 0
 AND source IN :sourceIds;
 
+-- استعلام لإضافة مانجا جديدة
 insert:
 INSERT INTO mangas(source, url, artist, author, description, genre, title, status, thumbnail_url, favorite, last_update, next_update, initialized, viewer, chapter_flags, cover_last_modified, date_added, update_strategy, calculate_interval, last_modified_at, version)
 VALUES (:source, :url, :artist, :author, :description, :genre, :title, :status, :thumbnailUrl, :favorite, :lastUpdate, :nextUpdate, :initialized, :viewerFlags, :chapterFlags, :coverLastModified, :dateAdded, :updateStrategy, :calculateInterval, 0, :version);
 
+-- استعلام لتحديث مانجا موجودة
 update:
 UPDATE mangas SET
     source = coalesce(:source, source),
@@ -178,5 +139,6 @@ UPDATE mangas SET
     is_syncing = coalesce(:isSyncing, is_syncing)
 WHERE _id = :mangaId;
 
+-- استعلام للحصول على معرّف آخر صف تم إدخاله
 selectLastInsertedRowId:
 SELECT last_insert_rowid();
