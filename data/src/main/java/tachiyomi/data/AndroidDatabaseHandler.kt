@@ -22,6 +22,7 @@ class AndroidDatabaseHandler(
 
     val suspendingTransactionId = ThreadLocal<Int>()
 
+    // تعديل: لا حاجة لتغيير الأساسيات هنا لأن الكود متوافق بشكل جيد.
     override suspend fun <T> await(inTransaction: Boolean, block: suspend Database.() -> T): T {
         return dispatch(inTransaction, block)
     }
@@ -87,17 +88,14 @@ class AndroidDatabaseHandler(
     }
 
     private suspend fun <T> dispatch(inTransaction: Boolean, block: suspend Database.() -> T): T {
-        // Create a transaction if needed and run the calling block inside it.
         if (inTransaction) {
             return withTransaction { block(db) }
         }
 
-        // If we're currently in the transaction thread, there's no need to dispatch our query.
         if (driver.currentTransaction() != null) {
             return block(db)
         }
 
-        // Get the current database context and run the calling block.
         val context = getCurrentDatabaseContext()
         return withContext(context) { block(db) }
     }
