@@ -58,6 +58,7 @@ abdoakojdad@gmail.com
 
 أو متابعة آخر التحديثات على حساباتنا:
 
-تويتر: @https://x.com/Emperor_1_?s=08
+تويتر: 
+https://x.com/Emperor_1_?s=08
 
-إنستغرام: @https://www.instagram.com/emperor_._1?igsh=enM4aG55Nmwwdmx2
+إنستغرام: https://www.instagram.com/emperor_._1?igsh=enM4aG55Nmwwdmx2
