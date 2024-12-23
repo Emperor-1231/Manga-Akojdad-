@@ -6,6 +6,7 @@ CREATE TABLE extension_repos (
     signing_key_fingerprint TEXT UNIQUE NOT NULL
 );
 
+-- Queries for extension repos
 findOne:
 SELECT *
 FROM extension_repos
@@ -24,34 +25,36 @@ count:
 SELECT COUNT(*)
 FROM extension_repos;
 
+-- Insert new extension repo
 insert:
 INSERT INTO extension_repos(base_url, name, short_name, website, signing_key_fingerprint)
 VALUES (:base_url, :name, :short_name, :website, :fingerprint);
 
+-- Upsert extension repo (Insert or update)
 upsert:
 INSERT INTO extension_repos(base_url, name, short_name, website, signing_key_fingerprint)
 VALUES (:base_url, :name, :short_name, :website, :fingerprint)
 ON CONFLICT(base_url)
-DO UPDATE
-SET
+DO UPDATE SET
     name = :name,
     short_name = :short_name,
-    website =: website,
+    website = :website,
     signing_key_fingerprint = :fingerprint
 WHERE base_url = base_url;
 
+-- Replace extension repo
 replace:
 INSERT INTO extension_repos(base_url, name, short_name, website, signing_key_fingerprint)
 VALUES (:base_url, :name, :short_name, :website, :fingerprint)
 ON CONFLICT(signing_key_fingerprint)
-DO UPDATE
-SET
+DO UPDATE SET
     base_url = :base_url,
     name = :name,
     short_name = :short_name,
-    website =: website
+    website = :website
 WHERE signing_key_fingerprint = signing_key_fingerprint;
 
+-- Delete extension repo
 delete:
 DELETE FROM extension_repos
 WHERE base_url = :base_url;
