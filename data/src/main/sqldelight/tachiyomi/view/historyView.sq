@@ -1,64 +1,66 @@
+-- إنشاء View يجمع بيانات المانغا والفصول وسجل القراءة
 CREATE VIEW historyView AS
 SELECT
-    history._id AS id,
-    mangas._id AS mangaId,
-    chapters._id AS chapterId,
-    mangas.title,
-    mangas.thumbnail_url AS thumbnailUrl,
-    mangas.source,
-    mangas.favorite,
-    mangas.cover_last_modified,
-    chapters.chapter_number AS chapterNumber,
-    history.last_read AS readAt,
-    history.time_read AS readDuration,
-    max_last_read.last_read AS maxReadAt,
-    max_last_read.chapter_id AS maxReadAtChapterId
+    history._id AS id,  -- يحدد معرف السجل في جدول التاريخ
+    mangas._id AS mangaId,  -- يحدد معرف المانغا
+    chapters._id AS chapterId,  -- يحدد معرف الفصل
+    mangas.title,  -- عنوان المانغا
+    mangas.thumbnail_url AS thumbnailUrl,  -- عنوان الصورة المصغرة للمانغا
+    mangas.source,  -- مصدر المانغا
+    mangas.favorite,  -- ما إذا كانت المانغا مفضلة
+    mangas.cover_last_modified,  -- وقت آخر تعديل على غلاف المانغا
+    chapters.chapter_number AS chapterNumber,  -- رقم الفصل
+    history.last_read AS readAt,  -- الوقت الذي قرأ فيه المستخدم الفصل
+    history.time_read AS readDuration,  -- مدة قراءة الفصل
+    max_last_read.last_read AS maxReadAt,  -- أحدث وقت قراءة من بين الفصول
+    max_last_read.chapter_id AS maxReadAtChapterId  -- معرف الفصل الذي تم قراءته في آخر وقت
 FROM mangas
 JOIN chapters
-ON mangas._id = chapters.manga_id
+    ON mangas._id = chapters.manga_id  -- ربط المانغا بالفصول
 JOIN history
-ON chapters._id = history.chapter_id
+    ON chapters._id = history.chapter_id  -- ربط الفصول بالتاريخ
 JOIN (
-    SELECT chapters.manga_id,chapters._id AS chapter_id, MAX(history.last_read) AS last_read
-    FROM chapters JOIN history
+    SELECT chapters.manga_id, chapters._id AS chapter_id, MAX(history.last_read) AS last_read
+    FROM chapters
+    JOIN history
     ON chapters._id = history.chapter_id
-    GROUP BY chapters.manga_id
+    GROUP BY chapters.manga_id  -- تجميع الفصول بناءً على المانغا للحصول على آخر قراءة
 ) AS max_last_read
-ON chapters.manga_id = max_last_read.manga_id;
+    ON chapters.manga_id = max_last_read.manga_id;
 
-history:
+-- استعلام للحصول على تاريخ القراءة مع معايير التصفية
 SELECT
-id,
-mangaId,
-chapterId,
-title,
-thumbnailUrl,
-source,
-favorite,
-cover_last_modified,
-chapterNumber,
-readAt,
-readDuration
+    id,
+    mangaId,
+    chapterId,
+    title,
+    thumbnailUrl,
+    source,
+    favorite,
+    cover_last_modified,
+    chapterNumber,
+    readAt,
+    readDuration
 FROM historyView
-WHERE historyView.readAt > 0
-AND maxReadAtChapterId = historyView.chapterId
-AND lower(historyView.title) LIKE ('%' || :query || '%')
-ORDER BY readAt DESC;
+WHERE historyView.readAt > 0  -- يتأكد من أن الفصل قد تم قراءته
+AND maxReadAtChapterId = historyView.chapterId  -- يتأكد من أن الفصل الذي تم قراءته هو آخر فصل
+AND lower(historyView.title) LIKE ('%' || :query || '%')  -- يسمح بالبحث عن المانغا باستخدام استعلام نصي
+ORDER BY readAt DESC;  -- ترتيب النتائج بناءً على وقت القراءة (الأحدث أولاً)
 
-getLatestHistory:
+-- استعلام للحصول على الفصل الأخير الذي تم قراءته
 SELECT
-id,
-mangaId,
-chapterId,
-title,
-thumbnailUrl,
-source,
-favorite,
-cover_last_modified,
-chapterNumber,
-readAt,
-readDuration
+    id,
+    mangaId,
+    chapterId,
+    title,
+    thumbnailUrl,
+    source,
+    favorite,
+    cover_last_modified,
+    chapterNumber,
+    readAt,
+    readDuration
 FROM historyView
-WHERE historyView.readAt > 0
-ORDER BY readAt DESC
-LIMIT 1;
+WHERE historyView.readAt > 0  -- يتأكد من أن الفصل قد تم قراءته
+ORDER BY readAt DESC  -- ترتيب النتائج حسب وقت القراءة
+LIMIT 1;  -- جلب الفصل الأحدث فقط
