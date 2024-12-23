@@ -1,34 +1,36 @@
+-- إنشاء View لعرض التحديثات الحديثة للفصول المفضلة
 CREATE VIEW updatesView AS
 SELECT
-    mangas._id AS mangaId,
-    mangas.title AS mangaTitle,
-    chapters._id AS chapterId,
-    chapters.name AS chapterName,
-    chapters.scanlator,
-    chapters.read,
-    chapters.bookmark,
-    chapters.last_page_read,
-    mangas.source,
-    mangas.favorite,
-    mangas.thumbnail_url AS thumbnailUrl,
-    mangas.cover_last_modified AS coverLastModified,
-    chapters.date_upload AS dateUpload,
-    chapters.date_fetch AS datefetch
-FROM mangas JOIN chapters
+    mangas._id AS mangaId,  -- معرف المانغا
+    mangas.title AS mangaTitle,  -- عنوان المانغا
+    chapters._id AS chapterId,  -- معرف الفصل
+    chapters.name AS chapterName,  -- اسم الفصل
+    chapters.scanlator,  -- مترجم الفصل
+    chapters.read,  -- حالة القراءة (مقروء أم لا)
+    chapters.bookmark,  -- حالة الفصل المفضل
+    chapters.last_page_read,  -- آخر صفحة تمت قراءتها
+    mangas.source,  -- مصدر المانغا
+    mangas.favorite,  -- حالة المانغا المفضلة
+    mangas.thumbnail_url AS thumbnailUrl,  -- رابط الصورة المصغرة للمانغا
+    mangas.cover_last_modified AS coverLastModified,  -- تاريخ آخر تعديل على غلاف المانغا
+    chapters.date_upload AS dateUpload,  -- تاريخ تحميل الفصل
+    chapters.date_fetch AS datefetch  -- تاريخ جلب الفصل
+FROM mangas
+JOIN chapters  -- دمج المانغا مع الفصول
 ON mangas._id = chapters.manga_id
-WHERE favorite = 1
-AND date_fetch > date_added
-ORDER BY date_fetch DESC;
+WHERE favorite = 1  -- فقط المانغا المفضلة
+AND date_fetch > date_added  -- الفصول التي تم جلبها بعد إضافتها
+ORDER BY date_fetch DESC;  -- ترتيب النتائج حسب تاريخ الجلب (الأحدث أولاً)
 
-getRecentUpdates:
+-- استعلام للحصول على التحديثات الحديثة بعد تاريخ معين
 SELECT *
 FROM updatesView
-WHERE dateUpload > :after
-LIMIT :limit;
+WHERE dateUpload > :after  -- جلب التحديثات التي تم تحميلها بعد تاريخ معين
+LIMIT :limit;  -- تحديد الحد الأقصى للنتائج
 
-getUpdatesByReadStatus:
+-- استعلام للحصول على التحديثات حسب حالة القراءة
 SELECT *
 FROM updatesView
-WHERE read = :read
-AND dateUpload > :after
-LIMIT :limit;
+WHERE read = :read  -- التصفية حسب حالة القراءة
+AND dateUpload > :after  -- جلب التحديثات التي تم تحميلها بعد تاريخ معين
+LIMIT :limit;  -- تحديد الحد الأقصى للنتائج
