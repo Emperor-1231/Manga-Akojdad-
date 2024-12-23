@@ -47,7 +47,7 @@ object MangaMapper {
         artist = artist,
         author = author,
         description = description,
-        genre = genre,
+        genre = genre ?: listOf(),
         status = status,
         thumbnailUrl = thumbnailUrl,
         updateStrategy = updateStrategy,
