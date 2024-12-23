@@ -1,4 +1,4 @@
-package tachiyomi.source.local
+package com.mangaakojdad.source.local
 
 import eu.kanade.tachiyomi.source.CatalogueSource
 import eu.kanade.tachiyomi.source.UnmeteredSource
