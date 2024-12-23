@@ -1,43 +1,39 @@
 pluginManagement {
     resolutionStrategy {
         eachPlugin {
-            val regex = "com.android.(library|application)".toRegex()
-            if (regex matches requested.id.id) {
+            val androidPluginRegex = "com.android.(library|application)".toRegex()
+            if (androidPluginRegex.matches(requested.id.id)) {
                 useModule("com.android.tools.build:gradle:${requested.version}")
             }
         }
     }
     repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-        maven(url = "https://www.jitpack.io")
+        gradlePluginPortal() // Default Gradle plugins
+        google() // For Android-specific dependencies
+        mavenCentral() // Central repository
+        maven(url = "https://www.jitpack.io") // Custom libraries
     }
 }
 
 dependencyResolutionManagement {
     versionCatalogs {
-        create("kotlinx") {
-            from(files("gradle/kotlinx.versions.toml"))
-        }
-        create("androidx") {
-            from(files("gradle/androidx.versions.toml"))
-        }
-        create("compose") {
-            from(files("gradle/compose.versions.toml"))
-        }
+        create("kotlinx") { from(files("gradle/kotlinx.versions.toml")) }
+        create("androidx") { from(files("gradle/androidx.versions.toml")) }
+        create("compose") { from(files("gradle/compose.versions.toml")) }
     }
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        mavenCentral()
-        google()
-        maven(url = "https://www.jitpack.io")
+        google() // Google Maven
+        mavenCentral() // Central repository
+        maven(url = "https://www.jitpack.io") // JitPack for custom libraries
     }
 }
 
+// Enable advanced features
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-rootProject.name = "Mihon"
+// Project structure
+rootProject.name = "MangaAkojdad"
 include(":app")
 include(":core-metadata")
 include(":core:archive")
