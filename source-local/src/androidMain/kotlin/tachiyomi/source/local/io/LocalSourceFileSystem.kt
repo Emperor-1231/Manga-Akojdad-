@@ -1,27 +1,35 @@
 package tachiyomi.source.local.io
 
+import android.content.Context
 import com.hippo.unifile.UniFile
-import tachiyomi.domain.storage.service.StorageManager
+import tachiyomi.core.common.util.system.logcat
+import logcat.LogPriority
 
-actual class LocalSourceFileSystem(
-    private val storageManager: StorageManager,
+class LocalSourceFileSystem(
+    private val context: Context
 ) {
-
-    actual fun getBaseDirectory(): UniFile? {
-        return storageManager.getLocalSourceDirectory()
+    private val baseDirectory: UniFile by lazy {
+        val directory = UniFile.fromUri(context, "file://path/to/local/directory")
+        directory.takeIf { it.exists() } ?: error("Directory does not exist")
     }
 
-    actual fun getFilesInBaseDirectory(): List<UniFile> {
-        return getBaseDirectory()?.listFiles().orEmpty().toList()
+    fun getBaseDirectory(): UniFile {
+        return baseDirectory
     }
 
-    actual fun getMangaDirectory(name: String): UniFile? {
-        return getBaseDirectory()
-            ?.findFile(name)
-            ?.takeIf { it.isDirectory }
+    fun getMangaDirectory(mangaUrl: String): UniFile? {
+        return baseDirectory.findFile(mangaUrl)
     }
 
-    actual fun getFilesInMangaDirectory(name: String): List<UniFile> {
-        return getMangaDirectory(name)?.listFiles().orEmpty().toList()
+    fun getFilesInBaseDirectory(): List<UniFile> {
+        return baseDirectory.listFiles().orEmpty()
+    }
+
+    fun getFilesInMangaDirectory(mangaUrl: String): List<UniFile> {
+        return getMangaDirectory(mangaUrl)?.listFiles().orEmpty()
+    }
+
+    fun UniFile.createFile(fileName: String): UniFile? {
+        return this.createFile(fileName)
     }
 }
