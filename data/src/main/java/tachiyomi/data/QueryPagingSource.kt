@@ -1,11 +1,11 @@
-package tachiyomi.data
+package mangaakojdad.data
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import app.cash.sqldelight.Query
 import kotlin.properties.Delegates
 
-class QueryPagingSource<RowType : Any>(
+class MangaQueryPagingSource<RowType : Any>(
     val handler: DatabaseHandler,
     val countQuery: Database.() -> Query<Long>,
     val queryProvider: Database.(Long, Long) -> Query<RowType>,
