@@ -46,6 +46,9 @@ class UpdatesRepositoryImpl(
         }
     }
 
+    /**
+     * Mapping function that constructs UpdatesWithRelations from raw query results.
+     */
     private fun mapUpdatesWithRelations(
         mangaId: Long,
         mangaTitle: String,
