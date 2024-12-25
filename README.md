@@ -1,6 +1,6 @@
 <div align="center">
 
-<a href="https://mangaakojdad.app">
+<a href="https://www.pinterest.com/pin/1075234479785024593/" alt="Manga Akojdad">
     <img src="https://www.pinterest.com/pin/1075234479785024593/" alt="Manga Akojdad logo" title="Manga Akojdad logo" width="80"/>
 </a>
 
